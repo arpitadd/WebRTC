@@ -1,13 +1,15 @@
 import express from "express"
 import { createServer } from "node:http"
 import {Server} from "socket.io"
+import cors from "cors"
 import connectToSocket from "./controllers/socketManager.js"
 const app=express()
 app.use(cors())
 app.use(express.json({limit:"40kb"}))
-app.use(express.urlencoded({limit:"40kb"}))
+app.use(express.urlencoded({limit:"40kb",extended:true}))
 import mongoose from "mongoose"
-import cors from "cors"
+import userroutes from "./routes/users.routes.js"
+
 const server=createServer(app)
 const io=connectToSocket(server)
 app.set("port",(process.env.PORT||8000))
