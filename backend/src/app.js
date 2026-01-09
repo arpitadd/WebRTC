@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import dotenv from "dotenv";
 dotenv.config();
-import connectToSocket from "./controllers/socketManager.js";
+import {connectToSocket} from "./controllers/socketManager.js";
 import userRoutes from "./routes/users.routes.js";
 
 import { Server } from "socket.io";
