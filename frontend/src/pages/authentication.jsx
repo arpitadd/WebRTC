@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Snackbar } from '@mui/material';
+import { AuthContext } from '../contexts/AuthContext';
 
 const defaultTheme = createTheme();
 
@@ -20,6 +21,34 @@ export default function Authentication() {
   const [message, setMessage] = React.useState();
   const [formState, setFormState] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+   const { handleRegister, handleLogin } = React.useContext(AuthContext);
+    let handleAuth = async () => {
+        try {
+            if (formState === 0) {
+
+                let result = await handleLogin(username, password)
+
+
+            }
+            if (formState === 1) {
+                let result = await handleRegister(name, username, password);
+                 console.log(result);
+                setUsername("");
+                setMessage(result);
+                setOpen(true);
+                setError("")
+                setFormState(0)
+                setPassword("")
+               
+            }
+        } catch (err) {
+
+            console.log(err);
+            let message = (err.response.data.message);
+            setError(message);
+        }
+    }
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -114,15 +143,18 @@ export default function Authentication() {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              <p style={{ color: 'red' }}>{error}</p>
+              
+               <p style={{ color: "red" }}>{error}</p>
 
               <Button
                 type="button"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                 onClick={handleAuth}
               >
-                {formState === 0 ? 'Login' : 'Register'}
+                
+{formState === 0 ? 'Login' : 'Register'}
               </Button>
             </Box>
           </Box>
