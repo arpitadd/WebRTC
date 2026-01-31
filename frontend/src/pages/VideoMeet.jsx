@@ -1,18 +1,18 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import styles from "../styles/VideoComponent.module.css";
-import { Badge, IconButton, TextField } from '@mui/material';
 import io from "socket.io-client";
+import { Badge, IconButton, TextField } from '@mui/material';
 import { Button } from '@mui/material';
-const server_url="http://localhost:8000"
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff'
+import styles from "../styles/VideoComponent.module.css";
 import CallEndIcon from '@mui/icons-material/CallEnd'
 import MicIcon from '@mui/icons-material/Mic'
 import MicOffIcon from '@mui/icons-material/MicOff'
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
+const server_url="http://localhost:8000"
 
 var connections={}
 const peerConfigConnections = {
@@ -100,6 +100,74 @@ function VideoMeetComponent() {
         canvas.getContext('2d').fillRect(0, 0, width, height)
         let stream = canvas.captureStream()
         return Object.assign(stream.getVideoTracks()[0], { enabled: false })
+    }
+     let getDislayMediaSuccess = (stream) => {
+        console.log("HERE")
+        try {
+            window.localStream.getTracks().forEach(track => track.stop())
+        } catch (e) { console.log(e) }
+
+        window.localStream = stream
+        localVideoref.current.srcObject = stream
+
+        for (let id in connections) {
+            if (id === socketIdRef.current) continue
+
+            connections[id].addStream(window.localStream)
+
+            connections[id].createOffer().then((description) => {
+                connections[id].setLocalDescription(description)
+                    .then(() => {
+                        socketRef.current.emit('signal', id, JSON.stringify({ 'sdp': connections[id].localDescription }))
+                    })
+                    .catch(e => console.log(e))
+            })
+        }
+
+        stream.getTracks().forEach(track => track.onended = () => {
+            setScreen(false)
+
+            try {
+                let tracks = localVideoref.current.srcObject.getTracks()
+                tracks.forEach(track => track.stop())
+            } catch (e) { console.log(e) }
+
+            let blackSilence = (...args) => new MediaStream([black(...args), silence()])
+            window.localStream = blackSilence()
+            localVideoref.current.srcObject = window.localStream
+
+            getUserMedia()
+
+        })
+    }
+
+      let getDislayMedia = () => {
+        if (screen) {
+            if (navigator.mediaDevices.getDisplayMedia) {
+                navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
+                    .then(getDislayMediaSuccess)
+                    .then((stream) => { })
+                    .catch((e) => console.log(e))
+            }
+        }
+    }
+
+     let handleVideo = () => {
+        setVideo(!video);
+        
+    }
+    let handleAudio = () => {
+        setAudio(!audio)
+        
+    }
+
+    useEffect(() => {
+        if (screen !== undefined) {
+            getDislayMedia();
+        }
+    }, [screen])
+    let handleScreen = () => {
+        setScreen(!screen);
     }
     let getUserMediaSuccess = (stream) => {
          try {
