@@ -1,10 +1,18 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import styles from "../styles/VideoComponent.css";
+import styles from "../styles/VideoComponent.module.css";
 import { Badge, IconButton, TextField } from '@mui/material';
 import io from "socket.io-client";
 import { Button } from '@mui/material';
 const server_url="http://localhost:8000"
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff'
+import CallEndIcon from '@mui/icons-material/CallEnd'
+import MicIcon from '@mui/icons-material/Mic'
+import MicOffIcon from '@mui/icons-material/MicOff'
+import ScreenShareIcon from '@mui/icons-material/ScreenShare';
+import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
+import ChatIcon from '@mui/icons-material/Chat'
 
 var connections={}
 const peerConfigConnections = {
