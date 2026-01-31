@@ -140,6 +140,20 @@ function VideoMeetComponent() {
 
         })
     }
+      let handleEndCall = () => {
+        try {
+            let tracks = localVideoref.current.srcObject.getTracks()
+            tracks.forEach(track => track.stop())
+        } catch (e) { }
+        window.location.href = "/"
+    }
+  let sendMessage = () => {
+        console.log(socketRef.current);
+        socketRef.current.emit('chat-message', message, username)
+        setMessage("");
+
+        
+    }
 
       let getDislayMedia = () => {
         if (screen) {
