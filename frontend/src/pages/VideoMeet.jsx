@@ -147,6 +147,17 @@ function VideoMeetComponent() {
         } catch (e) { }
         window.location.href = "/"
     }
+    const addMessage = (data, sender, socketIdSender) => {
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: sender, data: data }
+        ]);
+        if (socketIdSender !== socketIdRef.current) {
+            setNewMessages((prevNewMessages) => prevNewMessages + 1);
+        }
+    };
+    
+    
   let sendMessage = () => {
         console.log(socketRef.current);
         socketRef.current.emit('chat-message', message, username)
@@ -278,9 +289,7 @@ function VideoMeetComponent() {
         }
         
     }
-    let addMessage=()=>{
-        
-    }
+    
     let connectToSocketServer=()=>{
          socketRef.current = io.connect(server_url, { secure: false })
         socketRef.current.on('signal', gotMessageFromServer)
