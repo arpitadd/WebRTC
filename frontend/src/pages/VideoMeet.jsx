@@ -83,10 +83,9 @@ function VideoMeetComponent() {
     };
 
          useEffect(() => {
-        console.log("HELLO")
-        getPermissions();
+  getPermissions();
+}, [])
 
-    })
      let silence = () => {
         let ctx = new AudioContext()
         let oscillator = ctx.createOscillator()
