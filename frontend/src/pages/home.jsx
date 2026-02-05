@@ -5,6 +5,8 @@ import "../App.css";
 import { Button, IconButton, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { AuthContext } from '../contexts/AuthContext';
+import "../styles/home.css";
+
 
 function HomeComponent() {
 
@@ -26,18 +28,17 @@ function HomeComponent() {
 
                 <div style={{ display: "flex", alignItems: "center" }}>
 
-                    <h2>Apna Video Call</h2>
+                    <h2>WebRTC APP</h2>
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton onClick={
-                        () => {
-                            navigate("/history")
-                        }
-                    }>
-                        <RestoreIcon />
-                    </IconButton>
-                    <p>History</p>
+                    <div
+  className="historyBtn"
+  onClick={() => navigate("/history")}
+>
+  <RestoreIcon />
+  <span>History</span>
+</div>
 
                     <Button onClick={() => {
                         localStorage.removeItem("token")
@@ -54,7 +55,7 @@ function HomeComponent() {
             <div className="meetContainer">
                 <div className="leftPanel">
                     <div>
-                        <h2>Providing Quality Video Call Just Like Quality Education</h2>
+                        <h2>Providing Quality Video Call</h2>
 
                         <div style={{ display: 'flex', gap: "10px" }}>
 

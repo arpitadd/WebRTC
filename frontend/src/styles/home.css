@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.navBar {
+  height: 70px;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.navBar h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.navBar p {
+  margin-left: 6px;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.meetContainer {
+  height: calc(100vh - 70px);
+  display: flex;
+  background: radial-gradient(circle at top left, #0f172a, #020617);
+  color: white;
+}
+
+.leftPanel {
+  flex: 1;
+  padding: 80px 60px;
+  display: flex;
+  align-items: center;
+}
+
+.leftPanel h2 {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.leftPanel > div {
+  max-width: 520px;
+}
+
+.leftPanel .MuiTextField-root {
+  background: white;
+  border-radius: 8px;
+}
+
+.leftPanel button {
+  height: 56px;
+  padding: 0 28px;
+  font-weight: 600;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+  transition: all 0.25s ease;
+}
+
+.leftPanel button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(34, 197, 94, 0.55);
+}
+
+.rightPanel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.rightPanel img {
+  width: 70%;
+  max-width: 420px;
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.6));
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 900px) {
+  .meetContainer {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    padding: 50px 30px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .leftPanel h2 {
+    font-size: 28px;
+  }
+
+  .rightPanel {
+    display: none;
+  }
+}
+.historyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.historyBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
